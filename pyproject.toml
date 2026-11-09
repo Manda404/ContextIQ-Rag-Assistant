@@ -1,0 +1,39 @@
+[project]
+name = "contextiq-rag-assistant"
+version = "0.1.0"
+description = "Retrieval, generation and evaluation for ContextIQ RAG Assistant"
+authors = [{ name = "Manda Surel", email = "s239150.eps@gmail.com" }]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.15.2,<3.16"
+dependencies = ["pydantic>=2.12,<3.0", "scikit-learn (>=1.9.1,<2.0.0)", "sentence-transformers (>=6.2.0,<7.0.0)", "numpy (>=2.5.4,<3.0.0)", "pyyaml (>=6.0.3,<7.0.0)", "loguru (>=0.7.3,<0.8.0)"]
+
+[project.scripts]
+contextiq = "contextiq.cli:main"
+
+[tool.poetry]
+packages = [{ include = "contextiq", from = "src" }]
+
+[tool.poetry.group.notebook.dependencies]
+ipykernel = "^7.4.0"
+ipywidgets = "^8.1.9"
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.17.4"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py315"
+line-length = 100
+extend-exclude = [".python-runtime", ".venv-py311-backup", "model-cache", "data", "note", "notebooks/Olds"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

@@ -1,0 +1,18 @@
+# Paramètres communs aux notebooks de recherche et d'abstention.
+top_k: 3
+
+bm25:
+  k1: 1.5
+  b: 0.75
+
+embeddings:
+  model_name: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+  revision: e8f8c211226b894fcb81acc59f3b34ba3efd5f42
+  local_files_only: true
+  cache_dir: null  # null utilise le cache utilisateur Hugging Face.
+
+# Valeurs illustratives : ces seuils ne sont pas calibrés.
+abstention_thresholds:
+  TF-IDF: 0.3
+  BM25: 2.0
+  Embeddings: 0.4

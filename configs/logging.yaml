@@ -1,0 +1,9 @@
+# false : conserver les notebooks lisibles, sans logs dans leurs sorties.
+# true : afficher aussi les logs dans les notebooks et le terminal.
+console: false
+
+# Le fichier reste toujours actif, même lorsque console vaut false.
+log_dir: logs
+level: INFO
+rotation: "10 MB"
+retention: "7 days"

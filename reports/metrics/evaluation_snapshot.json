@@ -1,0 +1,1047 @@
+{
+  "schema_version": "1.0",
+  "study_status": "exploratory_not_independent_validation",
+  "created_at": "2026-11-09T00:34:02+01:00",
+  "runtime": {
+    "python": "3.15.2",
+    "platform": "Darwin",
+    "architecture": "arm64",
+    "packages": {
+      "pydantic": "2.14.3",
+      "scikit-learn": "1.9.1",
+      "numpy": "2.5.4",
+      "sentence-transformers": "6.2.0",
+      "torch": "2.15.0"
+    }
+  },
+  "dataset": {
+    "documents": 6,
+    "questions": 6,
+    "in_scope": 5,
+    "out_of_scope": 1,
+    "uncovered_documents": [
+      "D6"
+    ]
+  },
+  "fingerprints": {
+    "documents_sha256": "f5063795238a8330216c29473f1570b18bcc4312e1b5872e5e6a34c621189ced",
+    "questions_sha256": "9d08e14a2b57d00fb4ebb8bbd7dafb0e73729dcf8249a7852d59177b0d7f3d0c",
+    "settings_sha256": "8c9a9eb2ac97078f79421c05dc60185b46f6c175fec3235de9daf57fc5815857",
+    "source_code_sha256": "a5762874080fb881c28c15220404f45c93d514f4faed17e1f571eb9e25d1f08f",
+    "poetry_lock_sha256": "7386cd030ff7acd351e32602735bda1cde5f88000dc64864e3fef40be00fabd1"
+  },
+  "settings": {
+    "retrieval": {
+      "top_k": 3,
+      "bm25": {
+        "k1": 1.5,
+        "b": 0.75
+      },
+      "embeddings": {
+        "model_name": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+        "local_files_only": true,
+        "cache_dir": null
+      },
+      "abstention_thresholds": {
+        "TF-IDF": 0.3,
+        "BM25": 2.0,
+        "Embeddings": 0.4
+      }
+    },
+    "evaluation": {
+      "k_values": [
+        1,
+        2,
+        3
+      ],
+      "inspection_k": 3,
+      "threshold_grids": {
+        "TF-IDF": [
+          0.0,
+          0.1,
+          0.3,
+          0.5,
+          0.7
+        ],
+        "BM25": [
+          0.0,
+          0.5,
+          1.0,
+          2.0,
+          4.0
+        ],
+        "Embeddings": [
+          0.0,
+          0.2,
+          0.4,
+          0.6,
+          0.8
+        ]
+      }
+    }
+  },
+  "methods": {
+    "TF-IDF": {
+      "retrieval": {
+        "1": {
+          "precision": 0.6,
+          "recall": 0.6,
+          "hit_rate": 0.6,
+          "mrr": 0.6
+        },
+        "2": {
+          "precision": 0.4,
+          "recall": 0.8,
+          "hit_rate": 0.8,
+          "mrr": 0.7
+        },
+        "3": {
+          "precision": 0.26666666666666666,
+          "recall": 0.8,
+          "hit_rate": 0.8,
+          "mrr": 0.7
+        }
+      },
+      "abstention": {
+        "threshold": 0.3,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "false_refusals": 2,
+        "false_acceptances": 1,
+        "false_refusal_rate": 0.4,
+        "false_acceptance_rate": 1.0,
+        "acceptance_rate": 0.6666666666666666
+      },
+      "answers": {
+        "question_count": 6,
+        "answered_count": 4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "answer_rate": 0.6666666666666666,
+        "success_rate": 0.3333333333333333,
+        "faithfulness_rate": 1.0,
+        "citation_validity_rate": 1.0,
+        "relevant_source_rate": 0.6666666666666666,
+        "false_refusal_rate": 0.4,
+        "correct_refusal_rate": 0.0
+      },
+      "cases": [
+        {
+          "case_id": "Q1",
+          "question": "Combien de temps de préavis pour un contrat mensuel ?",
+          "gold_docs": [
+            "D1"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 0.4778779884039381
+            },
+            {
+              "source_id": "D4",
+              "score": 0.3184311172031962
+            },
+            {
+              "source_id": "D3",
+              "score": 0.2848641557145258
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.4778779884039381,
+            "threshold": 0.3
+          },
+          "answer": {
+            "question": "Combien de temps de préavis pour un contrat mensuel ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée. [D1]",
+            "sources": [
+              {
+                "id": "D1",
+                "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": true,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        },
+        {
+          "case_id": "Q2",
+          "question": "Quels frais si je quitte mon abonnement annuel avant la fin ?",
+          "gold_docs": [
+            "D2"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D2",
+              "score": 0.3799229251806442
+            },
+            {
+              "source_id": "D4",
+              "score": 0.20521301767664435
+            },
+            {
+              "source_id": "D3",
+              "score": 0.17239014335493072
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.3799229251806442,
+            "threshold": 0.3
+          },
+          "answer": {
+            "question": "Quels frais si je quitte mon abonnement annuel avant la fin ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "La résiliation d'un contrat annuel avant son terme entraîne des frais égaux à 50 % des mensualités restantes, plafonnés à 150 euros. [D2]",
+            "sources": [
+              {
+                "id": "D2",
+                "text": "La résiliation d'un contrat annuel avant son terme entraîne des frais égaux à 50 % des mensualités restantes, plafonnés à 150 euros."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": true,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        },
+        {
+          "case_id": "Q3",
+          "question": "Je déménage, puis-je partir sans payer ?",
+          "gold_docs": [
+            "D3"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D3",
+              "score": 0.17414501155849252
+            },
+            {
+              "source_id": "D6",
+              "score": 0.1741308823007503
+            },
+            {
+              "source_id": "D5",
+              "score": 0.1342149301370254
+            }
+          ],
+          "decision": {
+            "accepted": false,
+            "reason": "below_threshold",
+            "best_score": 0.17414501155849252,
+            "threshold": 0.3
+          },
+          "answer": {
+            "question": "Je déménage, puis-je partir sans payer ?",
+            "answered": false,
+            "reason": "abstention",
+            "text": "Je ne dispose pas d'informations fiables et suffisantes pour répondre à cette question.",
+            "sources": [],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": null,
+            "verbatim_faithful": null,
+            "citation_valid": null,
+            "refusal_correct": false,
+            "scope_decision_correct": false,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q4",
+          "question": "Ma ligne est coupée, que faire ?",
+          "gold_docs": [
+            "D4"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 0.17048075113638012
+            },
+            {
+              "source_id": "D4",
+              "score": 0.13368242137238165
+            }
+          ],
+          "decision": {
+            "accepted": false,
+            "reason": "below_threshold",
+            "best_score": 0.17048075113638012,
+            "threshold": 0.3
+          },
+          "answer": {
+            "question": "Ma ligne est coupée, que faire ?",
+            "answered": false,
+            "reason": "abstention",
+            "text": "Je ne dispose pas d'informations fiables et suffisantes pour répondre à cette question.",
+            "sources": [],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": null,
+            "verbatim_faithful": null,
+            "citation_valid": null,
+            "refusal_correct": false,
+            "scope_decision_correct": false,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q5",
+          "question": "Puis-je proposer une remise à un client qui veut partir ?",
+          "gold_docs": [
+            "D5"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 0.31367176470042557
+            },
+            {
+              "source_id": "D2",
+              "score": 0.20040836715180999
+            },
+            {
+              "source_id": "D3",
+              "score": 0.17860516880387542
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.31367176470042557,
+            "threshold": 0.3
+          },
+          "answer": {
+            "question": "Puis-je proposer une remise à un client qui veut partir ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée. [D1]",
+            "sources": [
+              {
+                "id": "D1",
+                "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": false,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q6",
+          "question": "Quel est le cours de l'action de l'entreprise ?",
+          "gold_docs": [],
+          "retrieved": [
+            {
+              "source_id": "D4",
+              "score": 0.4515609422610111
+            },
+            {
+              "source_id": "D5",
+              "score": 0.31101737866851503
+            },
+            {
+              "source_id": "D3",
+              "score": 0.29814761539125473
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.4515609422610111,
+            "threshold": 0.3
+          },
+          "answer": {
+            "question": "Quel est le cours de l'action de l'entreprise ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "Les clients en retard de paiement de plus de 30 jours voient leur ligne suspendue. La réactivation nécessite le règlement de la dette et 15 euros de frais. [D4]",
+            "sources": [
+              {
+                "id": "D4",
+                "text": "Les clients en retard de paiement de plus de 30 jours voient leur ligne suspendue. La réactivation nécessite le règlement de la dette et 15 euros de frais."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": false,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": false,
+            "successful": false
+          }
+        }
+      ]
+    },
+    "BM25": {
+      "retrieval": {
+        "1": {
+          "precision": 0.4,
+          "recall": 0.4,
+          "hit_rate": 0.4,
+          "mrr": 0.4
+        },
+        "2": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "hit_rate": 1.0,
+          "mrr": 0.7
+        },
+        "3": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "hit_rate": 1.0,
+          "mrr": 0.7
+        }
+      },
+      "abstention": {
+        "threshold": 2.0,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "false_refusals": 2,
+        "false_acceptances": 1,
+        "false_refusal_rate": 0.4,
+        "false_acceptance_rate": 1.0,
+        "acceptance_rate": 0.6666666666666666
+      },
+      "answers": {
+        "question_count": 6,
+        "answered_count": 4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "answer_rate": 0.6666666666666666,
+        "success_rate": 0.3333333333333333,
+        "faithfulness_rate": 1.0,
+        "citation_validity_rate": 1.0,
+        "relevant_source_rate": 0.6666666666666666,
+        "false_refusal_rate": 0.4,
+        "correct_refusal_rate": 0.0
+      },
+      "cases": [
+        {
+          "case_id": "Q1",
+          "question": "Combien de temps de préavis pour un contrat mensuel ?",
+          "gold_docs": [
+            "D1"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 5.45310997579226
+            },
+            {
+              "source_id": "D3",
+              "score": 2.0717018592032512
+            },
+            {
+              "source_id": "D2",
+              "score": 1.3996957029567103
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 5.45310997579226,
+            "threshold": 2.0
+          },
+          "answer": {
+            "question": "Combien de temps de préavis pour un contrat mensuel ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée. [D1]",
+            "sources": [
+              {
+                "id": "D1",
+                "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": true,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        },
+        {
+          "case_id": "Q2",
+          "question": "Quels frais si je quitte mon abonnement annuel avant la fin ?",
+          "gold_docs": [
+            "D2"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D2",
+              "score": 4.334329959739255
+            },
+            {
+              "source_id": "D4",
+              "score": 2.0237579852858048
+            },
+            {
+              "source_id": "D3",
+              "score": 1.7737136931836115
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 4.334329959739255,
+            "threshold": 2.0
+          },
+          "answer": {
+            "question": "Quels frais si je quitte mon abonnement annuel avant la fin ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "La résiliation d'un contrat annuel avant son terme entraîne des frais égaux à 50 % des mensualités restantes, plafonnés à 150 euros. [D2]",
+            "sources": [
+              {
+                "id": "D2",
+                "text": "La résiliation d'un contrat annuel avant son terme entraîne des frais égaux à 50 % des mensualités restantes, plafonnés à 150 euros."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": true,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        },
+        {
+          "case_id": "Q3",
+          "question": "Je déménage, puis-je partir sans payer ?",
+          "gold_docs": [
+            "D3"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D6",
+              "score": 0.7585079740702545
+            },
+            {
+              "source_id": "D3",
+              "score": 0.7136455090102394
+            },
+            {
+              "source_id": "D5",
+              "score": 0.6381570516418693
+            }
+          ],
+          "decision": {
+            "accepted": false,
+            "reason": "below_threshold",
+            "best_score": 0.7585079740702545,
+            "threshold": 2.0
+          },
+          "answer": {
+            "question": "Je déménage, puis-je partir sans payer ?",
+            "answered": false,
+            "reason": "abstention",
+            "text": "Je ne dispose pas d'informations fiables et suffisantes pour répondre à cette question.",
+            "sources": [],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": null,
+            "verbatim_faithful": null,
+            "citation_valid": null,
+            "refusal_correct": false,
+            "scope_decision_correct": false,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q4",
+          "question": "Ma ligne est coupée, que faire ?",
+          "gold_docs": [
+            "D4"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 1.6178975849053854
+            },
+            {
+              "source_id": "D4",
+              "score": 1.4182353951913025
+            }
+          ],
+          "decision": {
+            "accepted": false,
+            "reason": "below_threshold",
+            "best_score": 1.6178975849053854,
+            "threshold": 2.0
+          },
+          "answer": {
+            "question": "Ma ligne est coupée, que faire ?",
+            "answered": false,
+            "reason": "abstention",
+            "text": "Je ne dispose pas d'informations fiables et suffisantes pour répondre à cette question.",
+            "sources": [],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": null,
+            "verbatim_faithful": null,
+            "citation_valid": null,
+            "refusal_correct": false,
+            "scope_decision_correct": false,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q5",
+          "question": "Puis-je proposer une remise à un client qui veut partir ?",
+          "gold_docs": [
+            "D5"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 2.8346549903479605
+            },
+            {
+              "source_id": "D5",
+              "score": 2.056392446833172
+            },
+            {
+              "source_id": "D3",
+              "score": 1.7737136931836115
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 2.8346549903479605,
+            "threshold": 2.0
+          },
+          "answer": {
+            "question": "Puis-je proposer une remise à un client qui veut partir ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée. [D1]",
+            "sources": [
+              {
+                "id": "D1",
+                "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": false,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q6",
+          "question": "Quel est le cours de l'action de l'entreprise ?",
+          "gold_docs": [],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 2.081945391768287
+            },
+            {
+              "source_id": "D4",
+              "score": 1.7703569651345137
+            },
+            {
+              "source_id": "D3",
+              "score": 1.7044790253561446
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 2.081945391768287,
+            "threshold": 2.0
+          },
+          "answer": {
+            "question": "Quel est le cours de l'action de l'entreprise ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée. [D1]",
+            "sources": [
+              {
+                "id": "D1",
+                "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": false,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": false,
+            "successful": false
+          }
+        }
+      ]
+    },
+    "Embeddings": {
+      "retrieval": {
+        "1": {
+          "precision": 0.8,
+          "recall": 0.8,
+          "hit_rate": 0.8,
+          "mrr": 0.8
+        },
+        "2": {
+          "precision": 0.5,
+          "recall": 1.0,
+          "hit_rate": 1.0,
+          "mrr": 0.9
+        },
+        "3": {
+          "precision": 0.3333333333333333,
+          "recall": 1.0,
+          "hit_rate": 1.0,
+          "mrr": 0.9
+        }
+      },
+      "abstention": {
+        "threshold": 0.4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "false_refusals": 1,
+        "false_acceptances": 0,
+        "false_refusal_rate": 0.2,
+        "false_acceptance_rate": 0.0,
+        "acceptance_rate": 0.6666666666666666
+      },
+      "answers": {
+        "question_count": 6,
+        "answered_count": 4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "answer_rate": 0.6666666666666666,
+        "success_rate": 0.6666666666666666,
+        "faithfulness_rate": 1.0,
+        "citation_validity_rate": 1.0,
+        "relevant_source_rate": 0.75,
+        "false_refusal_rate": 0.2,
+        "correct_refusal_rate": 1.0
+      },
+      "cases": [
+        {
+          "case_id": "Q1",
+          "question": "Combien de temps de préavis pour un contrat mensuel ?",
+          "gold_docs": [
+            "D1"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D1",
+              "score": 0.633819043636322
+            },
+            {
+              "source_id": "D3",
+              "score": 0.5830031633377075
+            },
+            {
+              "source_id": "D2",
+              "score": 0.5359629988670349
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.633819043636322,
+            "threshold": 0.4
+          },
+          "answer": {
+            "question": "Combien de temps de préavis pour un contrat mensuel ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée. [D1]",
+            "sources": [
+              {
+                "id": "D1",
+                "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": true,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        },
+        {
+          "case_id": "Q2",
+          "question": "Quels frais si je quitte mon abonnement annuel avant la fin ?",
+          "gold_docs": [
+            "D2"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D2",
+              "score": 0.551647961139679
+            },
+            {
+              "source_id": "D4",
+              "score": 0.4940010905265808
+            },
+            {
+              "source_id": "D5",
+              "score": 0.4748796820640564
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.551647961139679,
+            "threshold": 0.4
+          },
+          "answer": {
+            "question": "Quels frais si je quitte mon abonnement annuel avant la fin ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "La résiliation d'un contrat annuel avant son terme entraîne des frais égaux à 50 % des mensualités restantes, plafonnés à 150 euros. [D2]",
+            "sources": [
+              {
+                "id": "D2",
+                "text": "La résiliation d'un contrat annuel avant son terme entraîne des frais égaux à 50 % des mensualités restantes, plafonnés à 150 euros."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": true,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        },
+        {
+          "case_id": "Q3",
+          "question": "Je déménage, puis-je partir sans payer ?",
+          "gold_docs": [
+            "D3"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D3",
+              "score": 0.4514557421207428
+            },
+            {
+              "source_id": "D2",
+              "score": 0.29008010029792786
+            },
+            {
+              "source_id": "D5",
+              "score": 0.28559252619743347
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.4514557421207428,
+            "threshold": 0.4
+          },
+          "answer": {
+            "question": "Je déménage, puis-je partir sans payer ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "En cas de déménagement, le client peut résilier sans frais son contrat annuel ou biannuel sur présentation d'un justificatif de domicile. [D3]",
+            "sources": [
+              {
+                "id": "D3",
+                "text": "En cas de déménagement, le client peut résilier sans frais son contrat annuel ou biannuel sur présentation d'un justificatif de domicile."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": true,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        },
+        {
+          "case_id": "Q4",
+          "question": "Ma ligne est coupée, que faire ?",
+          "gold_docs": [
+            "D4"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D4",
+              "score": 0.3143113851547241
+            },
+            {
+              "source_id": "D1",
+              "score": 0.06810417026281357
+            },
+            {
+              "source_id": "D2",
+              "score": 0.04580908268690109
+            }
+          ],
+          "decision": {
+            "accepted": false,
+            "reason": "below_threshold",
+            "best_score": 0.3143113851547241,
+            "threshold": 0.4
+          },
+          "answer": {
+            "question": "Ma ligne est coupée, que faire ?",
+            "answered": false,
+            "reason": "abstention",
+            "text": "Je ne dispose pas d'informations fiables et suffisantes pour répondre à cette question.",
+            "sources": [],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": null,
+            "verbatim_faithful": null,
+            "citation_valid": null,
+            "refusal_correct": false,
+            "scope_decision_correct": false,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q5",
+          "question": "Puis-je proposer une remise à un client qui veut partir ?",
+          "gold_docs": [
+            "D5"
+          ],
+          "retrieved": [
+            {
+              "source_id": "D3",
+              "score": 0.5448328256607056
+            },
+            {
+              "source_id": "D5",
+              "score": 0.44296571612358093
+            },
+            {
+              "source_id": "D4",
+              "score": 0.4221213459968567
+            }
+          ],
+          "decision": {
+            "accepted": true,
+            "reason": "threshold_met",
+            "best_score": 0.5448328256607056,
+            "threshold": 0.4
+          },
+          "answer": {
+            "question": "Puis-je proposer une remise à un client qui veut partir ?",
+            "answered": true,
+            "reason": "extractive",
+            "text": "En cas de déménagement, le client peut résilier sans frais son contrat annuel ou biannuel sur présentation d'un justificatif de domicile. [D3]",
+            "sources": [
+              {
+                "id": "D3",
+                "text": "En cas de déménagement, le client peut résilier sans frais son contrat annuel ou biannuel sur présentation d'un justificatif de domicile."
+              }
+            ],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": false,
+            "verbatim_faithful": true,
+            "citation_valid": true,
+            "refusal_correct": null,
+            "scope_decision_correct": true,
+            "successful": false
+          }
+        },
+        {
+          "case_id": "Q6",
+          "question": "Quel est le cours de l'action de l'entreprise ?",
+          "gold_docs": [],
+          "retrieved": [
+            {
+              "source_id": "D2",
+              "score": 0.36002117395401
+            },
+            {
+              "source_id": "D4",
+              "score": 0.30921459197998047
+            },
+            {
+              "source_id": "D5",
+              "score": 0.2532433569431305
+            }
+          ],
+          "decision": {
+            "accepted": false,
+            "reason": "below_threshold",
+            "best_score": 0.36002117395401,
+            "threshold": 0.4
+          },
+          "answer": {
+            "question": "Quel est le cours de l'action de l'entreprise ?",
+            "answered": false,
+            "reason": "abstention",
+            "text": "Je ne dispose pas d'informations fiables et suffisantes pour répondre à cette question.",
+            "sources": [],
+            "blocked_source_ids": []
+          },
+          "evaluation": {
+            "reference_hit": null,
+            "verbatim_faithful": null,
+            "citation_valid": null,
+            "refusal_correct": true,
+            "scope_decision_correct": true,
+            "successful": true
+          }
+        }
+      ]
+    }
+  }
+}

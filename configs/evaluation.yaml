@@ -1,0 +1,9 @@
+# K comparés par RetrievalEvaluator.
+k_values: [1, 2, 3]
+inspection_k: 3  # Doit appartenir à k_values.
+
+# Exploration uniquement : aucune sélection automatique du meilleur seuil.
+threshold_grids:
+  TF-IDF: [0.0, 0.1, 0.3, 0.5, 0.7]
+  BM25: [0.0, 0.5, 1.0, 2.0, 4.0]
+  Embeddings: [0.0, 0.2, 0.4, 0.6, 0.8]
