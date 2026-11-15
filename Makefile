@@ -1,4 +1,4 @@
-.PHONY: install check lint format-check format test ci
+.PHONY: install check lint format-check format test ci mlflow-ui
 
 PYTHON_SOURCES = src tests notebooks
 
@@ -23,3 +23,6 @@ test:
 	CONTEXTIQ_LOG_CONTEXT=tests CONTEXTIQ_LOG_CONSOLE=0 HF_HUB_OFFLINE=1 HF_HUB_DISABLE_TELEMETRY=1 poetry run python -m unittest discover -s tests -p 'test_*.py' -v
 
 ci: check test
+
+mlflow-ui:
+	MLFLOW_DISABLE_TELEMETRY=true poetry run python -m contextiq.monitoring.mlflow_tracking

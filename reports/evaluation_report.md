@@ -168,7 +168,8 @@ localement pour les mesures du présent rapport.
 Appliquer ensuite le protocole : enrichir et faire relire les cas, séparer développement
 et test par groupes de scénarios, calibrer les règles sur le développement, figer la
 configuration et lancer le test indépendant. Les critères métier et sécurité doivent
-être approuvés avant un pilote. Le plan de suivi en production reste un livrable distinct.
+être approuvés avant un pilote. Le [plan de suivi en production](production_monitoring.md), ajouté après cette mesure,
+décrit le suivi local MLflow et les procédures proposées pour un pilote.
 
 ## 9. Traçabilité
 

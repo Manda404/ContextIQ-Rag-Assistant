@@ -25,3 +25,6 @@ model-cache/
 notebooks/Olds
 logs/*
 !logs/.gitkeep
+mlflow/
+mlruns/
+mlflow.db*

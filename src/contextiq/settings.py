@@ -68,12 +68,21 @@ class EvaluationSettings(ConfigModel):
         return self
 
 
+class MonitoringSettings(ConfigModel):
+    """Conserver les expériences MLflow sur la machine, sans serveur externe."""
+
+    experiment_name: str = Field(default="contextiq-rag-assistant", pattern=r"\S")
+    storage_dir: str = Field(default="mlflow", pattern=r"\S")
+    port: int = Field(default=5000, ge=1024, le=65535)
+
+
 class Settings(ConfigModel):
     """Point d'entrée unique pour lire les configurations du projet."""
 
     retrieval: RetrievalSettings
     evaluation: EvaluationSettings
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
+    monitoring: MonitoringSettings = Field(default_factory=MonitoringSettings)
 
     @classmethod
     @log_operation
@@ -93,7 +102,15 @@ class Settings(ConfigModel):
             retrieval=yaml.safe_load((directory / "retrieval.yaml").read_text(encoding="utf-8")),
             evaluation=yaml.safe_load((directory / "evaluation.yaml").read_text(encoding="utf-8")),
             logging=load_logging_config(directory),
+            monitoring=yaml.safe_load((directory / "monitoring.yaml").read_text(encoding="utf-8"))
+            if (directory / "monitoring.yaml").exists()
+            else MonitoringSettings(),
         )
+        # Un dossier relatif est ancré au parent de configs/, pas au notebook courant.
+        storage = Path(settings.monitoring.storage_dir).expanduser()
+        if not storage.is_absolute():
+            storage = directory.parent / storage
+        settings.monitoring.storage_dir = str(storage.resolve())
         # Un cache relatif au YAML garde le même emplacement depuis les notebooks.
         cache_dir = settings.retrieval.embeddings.cache_dir
         if cache_dir is not None:

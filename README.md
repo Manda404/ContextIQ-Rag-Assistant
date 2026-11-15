@@ -117,6 +117,7 @@ Les chemins du projet sont détectés automatiquement depuis sa racine ou ses no
 | [05 — Prompt et sécurité](notebooks/05_prompt_and_safety.ipynb) | Construire un contexte sourcé et examiner les contrôles contre les injections. |
 | [06 — Produire des réponses](notebooks/06_extractive_answers.ipynb) | Restituer un extrait cité ou refuser de répondre. |
 | [07 — Évaluer les réponses](notebooks/07_answer_evaluation.ipynb) | Analyser des réponses métier et mesurer la qualité du pipeline extractif. |
+| [08 — Suivre avec MLflow](notebooks/08_mlflow_monitoring.ipynb) | Enregistrer et comparer les paramètres et métriques des évaluations locales. |
 
 ## Configuration et logs
 
@@ -127,6 +128,7 @@ Les paramètres sont chargés par `Settings.load()` et validés avec Pydantic.
 | [retrieval.yaml](configs/retrieval.yaml) | Top K, BM25, modèle d’embeddings et seuils d’abstention par méthode. |
 | [evaluation.yaml](configs/evaluation.yaml) | Valeurs de K et grilles de seuils à comparer. |
 | [logging.yaml](configs/logging.yaml) | Affichage des logs, dossier, niveau, rotation et rétention. |
+| [monitoring.yaml](configs/monitoring.yaml) | Expérience MLflow, dossier local de stockage et port de l’interface. |
 
 La journalisation **Loguru** écrit dans `logs/contextiq-rag-assistant.log`. L’affichage dans les notebooks et le terminal est **désactivé par défaut** :
 
@@ -142,6 +144,20 @@ Passez `console` à `true` pour afficher aussi les logs, puis rechargez `Setting
 
 Pour déplacer les données ou les configurations, utilisez `CONTEXTIQ_DATA_DIR` ou `CONTEXTIQ_CONFIG_DIR`, ou fournissez `data_dir` et `config_dir` aux classes concernées. Les variables doivent être exportées ou définies dans l’environnement Python : **le fichier `.env` n’est pas chargé automatiquement**. Les options disponibles figurent dans [.env.example](.env.example).
 
+## Suivi avec MLflow
+
+Exécutez le [notebook 08](notebooks/08_mlflow_monitoring.ipynb) pour enregistrer une évaluation par méthode. Pour consulter et comparer les exécutions :
+
+```sh
+make mlflow-ui
+```
+
+Ouvrez **http://127.0.0.1:5000**, puis sélectionnez l’expérience `contextiq-rag-assistant`. Le port est configurable dans `configs/monitoring.yaml` ; Ctrl+C arrête le serveur.
+
+MLflow conserve les paramètres, les métriques agrégées, les versions et les empreintes des données dans `mlflow/`, exclu de Git. Les textes métier ne sont pas enregistrés et la télémétrie est désactivée. Le serveur est local et n’est pas nécessaire pour enregistrer les évaluations.
+
+Le [plan de suivi en production](reports/production_monitoring.md) décrit les indicateurs, les alertes à prévoir, les retours conseillers et les vérifications après modification documentaire. La collecte en continu et les notifications automatiques ne sont pas encore implémentées.
+
 ## Organisation du projet
 
 ```text
@@ -154,6 +170,7 @@ ContextIQ-Rag-Assistant/
 │   ├── generation/    # Prompt et réponses extractives
 │   ├── evaluation/    # Métriques et évaluateurs
 │   ├── safety/        # Abstention et détection d’injections
+│   ├── monitoring/    # Évaluations et suivi local MLflow
 │   ├── schemas/       # Modèles Pydantic
 │   ├── settings.py    # Chargement des configurations
 │   └── logging.py     # Journalisation Loguru

@@ -1,0 +1,6 @@
+# Métadonnées SQLite et artefacts conservés uniquement sur cette machine.
+experiment_name: contextiq-rag-assistant
+# Chemin relatif au parent du dossier configs/.
+storage_dir: mlflow
+# Interface locale : http://127.0.0.1:5000 ; démarrage avec make mlflow-ui.
+port: 5000

@@ -190,5 +190,6 @@ mesure pas la performance réelle du modèle : ses tests utilisent des données 
 Archiver localement la configuration figée, les empreintes, les résultats détaillés et le
 rapport. Les conclusions doivent nommer le jeu utilisé, les dénominateurs, les défauts et
 les travaux restant à effectuer. Les données, l’énoncé et les travaux restent locaux,
-conformément aux conditions du test technique. Le plan de suivi en production constitue
-un livrable séparé, encore à rédiger.
+conformément aux conditions du test technique. Le [plan de suivi en production](production_monitoring.md) décrit le suivi local MLflow,
+les indicateurs et les procédures à prévoir pour un pilote. La collecte continue et les alertes
+automatiques ne sont pas encore déployées.
