@@ -227,7 +227,9 @@ make format-check  # Vérification du formatage
 make format        # Application du formatage
 ```
 
-Le workflow CI reprend les contrôles de qualité et les tests unitaires. Ces tests vérifient le comportement du code ; les notebooks évaluent la qualité des résultats sur les données métier.
+Le workflow GitHub Actions s’exécute à chaque push, pull request ou lancement manuel. Il sépare deux jobs : qualité/formatage et construction du package sur Ubuntu ; tests et vérification de la commande installée sur macOS avec Python 3.15.2. Poetry est isolé avec pipx et les environnements sont mis en cache à partir du lockfile. Les tests ne nécessitent ni données métier ni téléchargement de modèle. La télémétrie est désactivée et les logs de CI restent dans le dossier temporaire du runner.
+
+Ces tests vérifient le comportement du code ; les notebooks évaluent la qualité des résultats sur les données métier. Aucun déploiement automatique n’est configuré.
 
 ## Résultats et limites
 

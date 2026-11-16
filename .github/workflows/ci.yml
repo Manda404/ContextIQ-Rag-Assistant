@@ -18,6 +18,9 @@ env:
   POETRY_VIRTUALENVS_IN_PROJECT: "true"
   HF_HUB_OFFLINE: "1"
   HF_HUB_DISABLE_TELEMETRY: "1"
+  MLFLOW_DISABLE_TELEMETRY: "true"
+  MLFLOW_DISABLE_AGENT_HINT: "1"
+  STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
 
 jobs:
   quality:
@@ -28,11 +31,16 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+      # Poetry reste isolé des dépendances du projet et disponible avant le cache.
+      - name: Installer Poetry dans un environnement isolé
+        run: pipx install "poetry==$POETRY_VERSION"
       - uses: actions/setup-python@v7
         with:
           python-version-file: .python-version
-      - name: Installer Poetry
-        run: python -m pip install "poetry==$POETRY_VERSION"
+          cache: poetry
+          cache-dependency-path: poetry.lock
+      - name: Sélectionner le Python du projet
+        run: poetry env use python
       - name: Installer uniquement les outils de qualité
         run: poetry install --only dev --no-root
       - name: Vérifier la configuration et le lockfile
@@ -41,22 +49,35 @@ jobs:
         run: make lint
       - name: Vérifier le formatage du code et des notebooks
         run: make format-check
+      - name: Construire les distributions Python
+        run: poetry build
 
   tests:
     name: Tests Python 3.15
     # Le projet s'exécute sur CPU ; macOS évite les paquets CUDA du wheel Linux.
     runs-on: macos-latest
     timeout-minutes: 20
+    env:
+      CONTEXTIQ_LOG_DIR: ${{ runner.temp }}/contextiq-logs
+      CONTEXTIQ_LOG_CONSOLE: "0"
     steps:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+      - name: Installer Poetry dans un environnement isolé
+        run: pipx install "poetry==$POETRY_VERSION"
       - uses: actions/setup-python@v7
         with:
           python-version-file: .python-version
-      - name: Installer Poetry
-        run: python -m pip install "poetry==$POETRY_VERSION"
+          cache: poetry
+          cache-dependency-path: poetry.lock
+      - name: Sélectionner le Python du projet
+        run: poetry env use python
       - name: Installer le projet et les dépendances verrouillées
         run: poetry install --only main
+      - name: Vérifier le Python et la commande installée
+        run: |
+          poetry run python -c 'import platform; from pathlib import Path; assert platform.python_version() == Path(".python-version").read_text().strip()'
+          poetry run contextiq --version
       - name: Exécuter les tests sans données privées ni modèle téléchargé
         run: make test
