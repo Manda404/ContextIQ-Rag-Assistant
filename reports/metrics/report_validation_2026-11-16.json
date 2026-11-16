@@ -1,0 +1,456 @@
+{
+  "created_at": "2026-11-16T04:12:54.606887+01:00",
+  "study_status": "exploratory_same_development_questions",
+  "dataset": {
+    "documents": 6,
+    "questions": 6,
+    "in_scope": 5,
+    "out_of_scope": 1,
+    "uncovered_documents": [
+      "D6"
+    ]
+  },
+  "settings": {
+    "top_k": 3,
+    "bm25": {
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "embeddings": {
+      "model_name": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+      "local_files_only": true
+    },
+    "abstention_thresholds": {
+      "TF-IDF": 0.3,
+      "BM25": 2.0,
+      "Embeddings": 0.4
+    }
+  },
+  "fingerprints": {
+    "documents_sha256": "33f1d8e8f2ee609852a340161a180c91c97edc748699d9f90e443a0a8db37c47",
+    "questions_sha256": "304b51256a275d2d56fe30779dd95a8ddfb995a5576116c6d3786355730ad318"
+  },
+  "methods": {
+    "TF-IDF": {
+      "retrieval": [
+        {
+          "top_k": 1,
+          "summary": {
+            "precision": 0.6,
+            "recall": 0.6,
+            "hit_rate": 0.6,
+            "mrr": 0.6
+          }
+        },
+        {
+          "top_k": 2,
+          "summary": {
+            "precision": 0.4,
+            "recall": 0.8,
+            "hit_rate": 0.8,
+            "mrr": 0.7
+          }
+        },
+        {
+          "top_k": 3,
+          "summary": {
+            "precision": 0.26666666666666666,
+            "recall": 0.8,
+            "hit_rate": 0.8,
+            "mrr": 0.7
+          }
+        }
+      ],
+      "abstention": {
+        "threshold": 0.3,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "false_refusals": 2,
+        "false_acceptances": 1,
+        "false_refusal_rate": 0.4,
+        "false_acceptance_rate": 1.0,
+        "acceptance_rate": 0.6666666666666666
+      },
+      "answers": {
+        "question_count": 6,
+        "answered_count": 4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "answer_rate": 0.6666666666666666,
+        "success_rate": 0.3333333333333333,
+        "faithfulness_rate": 1.0,
+        "citation_validity_rate": 1.0,
+        "relevant_source_rate": 0.6666666666666666,
+        "false_refusal_rate": 0.4,
+        "correct_refusal_rate": 0.0
+      },
+      "cases": [
+        {
+          "case": 1,
+          "expected_ids": [
+            "D1"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D1"
+          ],
+          "best_score": 0.4778779884039381,
+          "successful": true
+        },
+        {
+          "case": 2,
+          "expected_ids": [
+            "D2"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D2"
+          ],
+          "best_score": 0.3799229251806442,
+          "successful": true
+        },
+        {
+          "case": 3,
+          "expected_ids": [
+            "D3"
+          ],
+          "answered": false,
+          "cited_ids": [],
+          "best_score": 0.17414501155849252,
+          "successful": false
+        },
+        {
+          "case": 4,
+          "expected_ids": [
+            "D4"
+          ],
+          "answered": false,
+          "cited_ids": [],
+          "best_score": 0.17048075113638012,
+          "successful": false
+        },
+        {
+          "case": 5,
+          "expected_ids": [
+            "D5"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D1"
+          ],
+          "best_score": 0.31367176470042557,
+          "successful": false
+        },
+        {
+          "case": 6,
+          "expected_ids": [],
+          "answered": true,
+          "cited_ids": [
+            "D4"
+          ],
+          "best_score": 0.4515609422610111,
+          "successful": false
+        }
+      ]
+    },
+    "BM25": {
+      "retrieval": [
+        {
+          "top_k": 1,
+          "summary": {
+            "precision": 0.4,
+            "recall": 0.4,
+            "hit_rate": 0.4,
+            "mrr": 0.4
+          }
+        },
+        {
+          "top_k": 2,
+          "summary": {
+            "precision": 0.5,
+            "recall": 1.0,
+            "hit_rate": 1.0,
+            "mrr": 0.7
+          }
+        },
+        {
+          "top_k": 3,
+          "summary": {
+            "precision": 0.3333333333333333,
+            "recall": 1.0,
+            "hit_rate": 1.0,
+            "mrr": 0.7
+          }
+        }
+      ],
+      "abstention": {
+        "threshold": 2.0,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "false_refusals": 2,
+        "false_acceptances": 1,
+        "false_refusal_rate": 0.4,
+        "false_acceptance_rate": 1.0,
+        "acceptance_rate": 0.6666666666666666
+      },
+      "answers": {
+        "question_count": 6,
+        "answered_count": 4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "answer_rate": 0.6666666666666666,
+        "success_rate": 0.3333333333333333,
+        "faithfulness_rate": 1.0,
+        "citation_validity_rate": 1.0,
+        "relevant_source_rate": 0.6666666666666666,
+        "false_refusal_rate": 0.4,
+        "correct_refusal_rate": 0.0
+      },
+      "cases": [
+        {
+          "case": 1,
+          "expected_ids": [
+            "D1"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D1"
+          ],
+          "best_score": 5.45310997579226,
+          "successful": true
+        },
+        {
+          "case": 2,
+          "expected_ids": [
+            "D2"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D2"
+          ],
+          "best_score": 4.334329959739255,
+          "successful": true
+        },
+        {
+          "case": 3,
+          "expected_ids": [
+            "D3"
+          ],
+          "answered": false,
+          "cited_ids": [],
+          "best_score": 0.7585079740702545,
+          "successful": false
+        },
+        {
+          "case": 4,
+          "expected_ids": [
+            "D4"
+          ],
+          "answered": false,
+          "cited_ids": [],
+          "best_score": 1.6178975849053854,
+          "successful": false
+        },
+        {
+          "case": 5,
+          "expected_ids": [
+            "D5"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D1"
+          ],
+          "best_score": 2.8346549903479605,
+          "successful": false
+        },
+        {
+          "case": 6,
+          "expected_ids": [],
+          "answered": true,
+          "cited_ids": [
+            "D1"
+          ],
+          "best_score": 2.081945391768287,
+          "successful": false
+        }
+      ]
+    },
+    "Embeddings": {
+      "retrieval": [
+        {
+          "top_k": 1,
+          "summary": {
+            "precision": 0.8,
+            "recall": 0.8,
+            "hit_rate": 0.8,
+            "mrr": 0.8
+          }
+        },
+        {
+          "top_k": 2,
+          "summary": {
+            "precision": 0.5,
+            "recall": 1.0,
+            "hit_rate": 1.0,
+            "mrr": 0.9
+          }
+        },
+        {
+          "top_k": 3,
+          "summary": {
+            "precision": 0.3333333333333333,
+            "recall": 1.0,
+            "hit_rate": 1.0,
+            "mrr": 0.9
+          }
+        }
+      ],
+      "abstention": {
+        "threshold": 0.4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "false_refusals": 1,
+        "false_acceptances": 0,
+        "false_refusal_rate": 0.2,
+        "false_acceptance_rate": 0.0,
+        "acceptance_rate": 0.6666666666666666
+      },
+      "answers": {
+        "question_count": 6,
+        "answered_count": 4,
+        "in_scope_count": 5,
+        "out_of_scope_count": 1,
+        "answer_rate": 0.6666666666666666,
+        "success_rate": 0.6666666666666666,
+        "faithfulness_rate": 1.0,
+        "citation_validity_rate": 1.0,
+        "relevant_source_rate": 0.75,
+        "false_refusal_rate": 0.2,
+        "correct_refusal_rate": 1.0
+      },
+      "cases": [
+        {
+          "case": 1,
+          "expected_ids": [
+            "D1"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D1"
+          ],
+          "best_score": 0.633819043636322,
+          "successful": true
+        },
+        {
+          "case": 2,
+          "expected_ids": [
+            "D2"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D2"
+          ],
+          "best_score": 0.551647961139679,
+          "successful": true
+        },
+        {
+          "case": 3,
+          "expected_ids": [
+            "D3"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D3"
+          ],
+          "best_score": 0.4514557421207428,
+          "successful": true
+        },
+        {
+          "case": 4,
+          "expected_ids": [
+            "D4"
+          ],
+          "answered": false,
+          "cited_ids": [],
+          "best_score": 0.3143113851547241,
+          "successful": false
+        },
+        {
+          "case": 5,
+          "expected_ids": [
+            "D5"
+          ],
+          "answered": true,
+          "cited_ids": [
+            "D3"
+          ],
+          "best_score": 0.5448328256607056,
+          "successful": false
+        },
+        {
+          "case": 6,
+          "expected_ids": [],
+          "answered": false,
+          "cited_ids": [],
+          "best_score": 0.36002117395401,
+          "successful": true
+        }
+      ]
+    }
+  },
+  "runtime": {
+    "python": "3.15.2",
+    "platform": "Darwin",
+    "architecture": "arm64",
+    "packages": {
+      "pydantic": "2.14.3",
+      "scikit-learn": "1.9.1",
+      "sentence-transformers": "6.2.0",
+      "numpy": "2.5.4",
+      "torch": "2.15.0",
+      "mlflow": "3.18.0",
+      "streamlit": "1.67.0"
+    }
+  },
+  "code": {
+    "git_commit": "93c79b5d576766fab100c36c1a2c5d1d9c85664c",
+    "source_files_sha256": {
+      "src/contextiq/__init__.py": "f744e326e6e3239c7e2975a91b8e93a9174b02c56c04611dfbd8e494611adbb2",
+      "src/contextiq/cli.py": "c0b58ecfd813d6029473c5f3120d6a3b7014ad5910e13a60cdb07c916e887da6",
+      "src/contextiq/evaluation/__init__.py": "f77851c84e7640c678b093c2c72c82efff54f97a5629608c9663a1628f0eb566",
+      "src/contextiq/evaluation/abstention_metrics.py": "e2dc9cd00ebcfa98a3b77828db0947f33db8e1d739035aa873302306330dfd63",
+      "src/contextiq/evaluation/answer_metrics.py": "1fdc9112bea5f4fc0c3a69ef019a9fc16955871f1e36ffdb56345cb458fd67b0",
+      "src/contextiq/evaluation/evaluator.py": "3447bba5a94b2f8a987c2dba8037e004698c6e0c206468e5e025ab123f5ded58",
+      "src/contextiq/evaluation/retrieval_metrics.py": "8e13be789ac354bfa7b5d120dc92ff095edc9bd5fa4404052a4f194fb70665a3",
+      "src/contextiq/generation/__init__.py": "8dcb56d23d1d8a30df0f44f389411e50ad8698bb0f601f437184813c62aa9f20",
+      "src/contextiq/generation/extractive_answer.py": "004bc9b2250a6ba14f8f7cc6d6d6bbca74d5e031957c51512edb847c82f7fa44",
+      "src/contextiq/generation/prompt_builder.py": "3c3b2c0b5f294962f558413eb874a2feea2c5ece4dbbf008a53d5590a8adfa31",
+      "src/contextiq/ingestion/__init__.py": "02df884de8ec9d1ada78da4e3ff47704a2d2888373b4bf78000ee03b9f5ccf39",
+      "src/contextiq/ingestion/chunking.py": "9d1e5b1a8983d2c13854636e96860fd5f8b2ebc0a6b4f7686c788007e6de7dc7",
+      "src/contextiq/ingestion/loader.py": "d08fe8c790d555482a46d734f248de79f69ccc33ef2ddaf2698ed5e6570099d8",
+      "src/contextiq/ingestion/preprocessing.py": "3f07142dc13e02556ee961a0b530a32b56aaae3b0901bd2bdb2547db6fe709ce",
+      "src/contextiq/logging.py": "f1822735fb295cb92799204b8a5c83b1a13fa598c46e5be013536783008e566d",
+      "src/contextiq/monitoring/__init__.py": "d443d8c0e03b206ce5cc201853b113b478c1dbdc74d929b584fd8fc6d12ad28f",
+      "src/contextiq/monitoring/conversations.py": "aae6a341125e1756fef3c40d14ca8d1b2365b5e107edcf6e2805d5a78bf3efe0",
+      "src/contextiq/monitoring/mlflow_tracking.py": "2f6ea06202b514356b4a1a9ec692aea449346637b07eb27b167de87761217b81",
+      "src/contextiq/retrieval/__init__.py": "ad5f5b84a0dd674c62e759a3f515293d5d0d6d017a99fea0c63588f8b47382b3",
+      "src/contextiq/retrieval/base.py": "5cab94633267fea184ed7b6ebd9a53eab1230d21337796beeb46ef8945ab56d4",
+      "src/contextiq/retrieval/bm25.py": "5ad5a80c8391fcd5c1c35870322a78f76c91e0b48a3b6acc9f69b59cf8540a19",
+      "src/contextiq/retrieval/embeddings.py": "ae676ced441d361a10be96263555f4540a4656d7b81c3926e6b64fee188312f9",
+      "src/contextiq/retrieval/ranking.py": "a6ec77e967d21198ae20aeeeb756bfe806288df56a92d2ae51ae3c5fdb3161ad",
+      "src/contextiq/retrieval/tfidf.py": "facf53e39385d628e7c4a9ebfc9a7001b119424b26bb3e2d93c4e2ac9df92f4a",
+      "src/contextiq/safety/__init__.py": "03f84d14a094c081d019aa0f270392cbe01eb145769ae562b3f8ab8666a99a02",
+      "src/contextiq/safety/abstention.py": "f5d2c86dfae41ef7867cc18adb57763c9350782ba54bfffe09d6ac4371074d06",
+      "src/contextiq/safety/prompt_injection.py": "6de3fda806bd95920838e145f629d01c1dfee6ed9cb73e643100eb604abb294a",
+      "src/contextiq/schemas/__init__.py": "bc4e4f026b3cd9d96c0fbb53f67975ea6c8d290160a1164a2448068152e8a745",
+      "src/contextiq/schemas/models.py": "0d7d20b678fb1d212141ec75a3dc121a02c80f9cca84786b4ec908935e775d6a",
+      "src/contextiq/settings.py": "0ef1c05a1f5ad52f31748e3756f93a9c11dcf033b8a2655191eedadc6ba501d5",
+      "src/contextiq/ui/__init__.py": "9587ebb5c44686869974d2732cf6feb49ac4f88023d4461173cc222d356684fe",
+      "src/contextiq/ui/app.py": "1fe952176573439480f7785a6fbccd0c7ad7e868c6c43be1410dfe9191142b51",
+      "src/contextiq/ui/service.py": "932b590971fc252bac31706560ab1196cdcf9cfc440362a6744bcd18b5d68dd3",
+      "src/contextiq/ui/theme.py": "e3e9c053d699eddf70ceeea25ab1e354a71958f0ffb3b222bc8963c56a13bea9"
+    },
+    "poetry_lock_sha256": "5e448238cf959a73ca6c2553b348fe4c4a72167a232e7345fc2390471f72cdaf"
+  }
+}

@@ -4,6 +4,8 @@ Un assistant documentaire en Python pour **retrouver des informations, produire 
 
 Les notebooks présentent les expériences et leurs résultats. La logique métier est regroupée dans des classes Python réutilisables, avec validation des données et des configurations par **Pydantic**.
 
+Pour comprendre la démarche, les choix techniques et les résultats métier, consultez le [rapport de présentation du projet](README-Report-RAG.md).
+
 ## Fonctionnement
 
 ```text
