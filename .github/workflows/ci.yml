@@ -58,7 +58,6 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 20
     env:
-      CONTEXTIQ_LOG_DIR: ${{ runner.temp }}/contextiq-logs
       CONTEXTIQ_LOG_CONSOLE: "0"
     steps:
       - uses: actions/checkout@v7
@@ -76,8 +75,12 @@ jobs:
       - name: Installer le projet et les dépendances verrouillées
         run: poetry install --only main
       - name: Vérifier le Python et la commande installée
+        env:
+          CONTEXTIQ_LOG_DIR: ${{ runner.temp }}/contextiq-logs
         run: |
           poetry run python -c 'import platform; from pathlib import Path; assert platform.python_version() == Path(".python-version").read_text().strip()'
           poetry run contextiq --version
       - name: Exécuter les tests sans données privées ni modèle téléchargé
+        env:
+          CONTEXTIQ_LOG_DIR: ${{ runner.temp }}/contextiq-logs
         run: make test
