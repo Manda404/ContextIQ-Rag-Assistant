@@ -35,12 +35,13 @@ jobs:
       - name: Installer Poetry dans un environnement isolé
         run: pipx install "poetry==$POETRY_VERSION"
       - uses: actions/setup-python@v7
+        id: python
         with:
           python-version-file: .python-version
           cache: poetry
           cache-dependency-path: poetry.lock
       - name: Sélectionner le Python du projet
-        run: poetry env use python
+        run: poetry env use "${{ steps.python.outputs.python-path }}"
       - name: Installer uniquement les outils de qualité
         run: poetry install --only dev --no-root
       - name: Vérifier la configuration et le lockfile
@@ -66,12 +67,13 @@ jobs:
       - name: Installer Poetry dans un environnement isolé
         run: pipx install "poetry==$POETRY_VERSION"
       - uses: actions/setup-python@v7
+        id: python
         with:
           python-version-file: .python-version
           cache: poetry
           cache-dependency-path: poetry.lock
       - name: Sélectionner le Python du projet
-        run: poetry env use python
+        run: poetry env use "${{ steps.python.outputs.python-path }}"
       - name: Installer le projet et les dépendances verrouillées
         run: poetry install --only main
       - name: Vérifier le Python et la commande installée
