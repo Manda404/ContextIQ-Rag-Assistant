@@ -4,7 +4,7 @@
 
 Le suivi doit détecter une baisse de qualité, une panne ou une réponse dangereuse, puis permettre une correction vérifiable. **MLflow est utilisé en local pour suivre les évaluations** ; **Loguru** conserve les traces techniques des opérations.
 
-La version actuelle enregistre une exécution MLflow par méthode et valeur de K via `MLflowTracker.evaluate()`. Elle ne déploie pas de service de production, de collecte des retours conseillers ni de système automatique d’alertes. Le plan ci-dessous décrit le fonctionnement à appliquer pour un pilote. Aucun accès à des dossiers clients n’est ajouté.
+La version actuelle enregistre une exécution MLflow par méthode et valeur de K via `MLflowTracker.evaluate()`. La plateforme journalise aussi les questions/réponses et permet leur revue humaine. Elle ne déploie pas de service de production ni de système automatique d’alertes. Le plan ci-dessous décrit le fonctionnement à appliquer pour un pilote. Aucun accès à des dossiers clients n’est ajouté.
 
 ## Utiliser le suivi local
 
@@ -25,7 +25,7 @@ Chaque exécution conserve :
 - Métriques de retrieval, qualité des réponses, effectifs, fausses acceptations et durée de la boucle d’évaluation.
 - Artefacts JSON : configuration de recherche sans chemin de cache, métriques agrégées et versions.
 
-Les questions, documents, réponses et identifiants de sources ne sont pas enregistrés. Les empreintes servent à identifier les changements, pas à reconstituer une version : conserver séparément les versions autorisées du corpus. Le dossier MLflow est ignoré par Git. Un run terminé avec succès indique que l’évaluation a fonctionné, pas que le système est approuvé pour la production.
+Les questions, documents, réponses et identifiants de sources ne sont pas enregistrés dans MLflow. Les échanges de simulation et leurs sources sont conservés séparément dans le journal local `logs/conversations.db`, activé par `log_conversations` dans le YAML de monitoring. Les empreintes servent à identifier les changements, pas à reconstituer une version : conserver séparément les versions autorisées du corpus. Le dossier MLflow est ignoré par Git. Un run terminé avec succès indique que l’évaluation a fonctionné, pas que le système est approuvé pour la production.
 
 ## Indicateurs, contrôles et responsabilités proposés
 
@@ -57,7 +57,9 @@ Prévoir un formulaire minimal : catégorie du problème, identifiant de version
 
 Le référent métier relit les signalements chaque semaine, élimine les doublons, qualifie le défaut et définit la réponse attendue. Un cas confirmé devient un test de non-régression. Distinguer un document manquant, une source mal classée, un mauvais refus et une règle commerciale ambiguë. Les cas nouvellement utilisés pour corriger le système appartiennent au développement ; ils ne constituent plus un test indépendant.
 
-Le formulaire et ce circuit ne sont pas encore implémentés.
+La page **Suivi des conversations** propose maintenant la revue de chaque échange : verdict et commentaire, avec mise à jour d’un avis existant. Les questions, réponses, sources, scores, dates UTC et identifiants de version sont consultables localement. Les erreurs techniques sont enregistrées avec leur type. L’organisation d’une revue hebdomadaire et le circuit d’incident restent à appliquer par les responsables désignés.
+
+Le bilan peut être enregistré explicitement dans l’expérience MLflow locale `contextiq-rag-assistant-conversations` : effectifs de réponses/refus/erreurs, cas revus et signalés, taux avec leurs dénominateurs. Aucun texte ni commentaire n’est transféré à MLflow. Ces instantanés agrègent tout le journal local, toutes versions confondues ; ils ne remplacent ni une comparaison sur jeu fixe ni un test indépendant.
 
 ## Après modification de documents ou de paramètres
 
@@ -70,10 +72,10 @@ Le formulaire et ce circuit ne sont pas encore implémentés.
 
 ## Confidentialité et conservation
 
-Le dossier MLflow reste local. Pour un pilote, désigner les personnes autorisées, définir une durée de conservation des évaluations et sauvegarder ensemble la base SQLite et les artefacts lorsque les écritures sont arrêtées. La rotation Loguru ne purge pas MLflow ; sa conservation nécessite une procédure distincte. Aucun dépôt distant ni service hébergé n’est nécessaire à ce suivi.
+Le dossier MLflow reste local. Pour un pilote, désigner les personnes autorisées, définir une durée de conservation des évaluations et sauvegarder ensemble la base SQLite et les artefacts lorsque les écritures sont arrêtées. La rotation Loguru ne purge ni MLflow ni le journal SQLite des conversations ; leur conservation nécessite une procédure distincte. Le journal des conversations est accessible au seul propriétaire du fichier sur les systèmes respectant les permissions Unix. Aucun dépôt distant ni service hébergé n’est nécessaire à ce suivi.
 
 ## Limites et étape suivante
 
-Le suivi local est opérationnel pour les évaluations. La supervision continue, les alertes automatiques, les retours conseillers et les critères chiffrés de validation restent à mettre en place si un pilote est décidé. La prochaine priorité de qualité demeure l’enrichissement et la séparation des jeux de développement, calibration et test.
+Le suivi local est opérationnel pour les évaluations. Les requêtes et erreurs de la simulation sont journalisées automatiquement et les revues humaines sont persistées. Les alertes automatiques, le suivi d’un service de production et les critères chiffrés de validation restent à mettre en place si un pilote est décidé. La prochaine priorité de qualité demeure l’enrichissement et la séparation des jeux de développement, calibration et test.
 
 Référence technique : [MLflow — stockage local SQLite](https://mlflow.org/docs/latest/ml/tracking/tutorials/local-database/).

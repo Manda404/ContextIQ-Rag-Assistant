@@ -4,6 +4,8 @@ Date : **15 novembre 2026**. Référence : `note/README-0.md`.
 
 > Mise à jour après audit : le suivi local MLflow et le [plan de suivi en production](production_monitoring.md) ont été ajoutés. Les constats ci-dessous décrivent l’état avant cet ajout ; le principal livrable documentaire manquant est désormais présent. La collecte continue et les alertes automatiques restent proposées, sans déploiement.
 
+Voir aussi la [revue exhaustive actualisée après MLflow](requirements_review.md), qui distingue les exigences de la partie 2, les bonus et les livrables globaux.
+
 ## Conclusion
 
 Le projet répond largement au périmètre fonctionnel de la **partie 2 — assistant RAG et évaluation** : recherche, comparaison de méthodes, prompt sourcé, refus, protection contre l’injection fournie et analyse des trois réponses imposées. Le manque explicite principal est le **plan de suivi en production**, encore annoncé comme restant à rédiger.

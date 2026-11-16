@@ -6,6 +6,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
+from contextiq.monitoring.conversations import ConversationSummary
 from contextiq.monitoring.mlflow_tracking import MLflowTracker
 from contextiq.retrieval.bm25 import BM25Retriever
 from contextiq.schemas.models import Dataset, Document, EvaluationQuestion
@@ -80,3 +81,24 @@ class TestMLflowTracker(unittest.TestCase):
         self.assertTrue(Path(settings.monitoring.storage_dir).is_absolute())
         self.assertEqual(settings.monitoring.experiment_name, "contextiq-rag-assistant")
         self.assertEqual(settings.monitoring.port, 5000)
+
+    def test_conversation_summary_is_separate_and_contains_only_aggregates(self):
+        summary = ConversationSummary(
+            total=3,
+            answered=2,
+            refused=1,
+            errors=0,
+            reviewed=1,
+            flagged=1,
+            refusal_rate=1 / 3,
+            error_rate=0,
+            flagged_review_rate=1,
+        )
+        run_id = self.tracker.log_conversation_summary(summary)
+        run = self.tracker.client.get_run(run_id)
+        self.assertNotEqual(run.info.experiment_id, self.tracker.experiment_id)
+        self.assertEqual(run.info.status, "FINISHED")
+        self.assertEqual(run.data.metrics["chat_total"], 3.0)
+        self.assertEqual(run.data.metrics["chat_flagged_review_rate"], 1.0)
+        self.assertEqual(run.data.tags["scope"], "all_local_history")
+        self.assertFalse(self.tracker.client.list_artifacts(run_id))

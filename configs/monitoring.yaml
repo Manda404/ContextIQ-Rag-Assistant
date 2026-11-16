@@ -4,3 +4,6 @@ experiment_name: contextiq-rag-assistant
 storage_dir: mlflow
 # Interface locale : http://127.0.0.1:5000 ; démarrage avec make mlflow-ui.
 port: 5000
+# Journal local des questions et réponses dans logs/conversations.db.
+# Indépendant de console dans logging.yaml : aucun texte n'est affiché dans les logs console.
+log_conversations: true

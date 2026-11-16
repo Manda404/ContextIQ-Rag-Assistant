@@ -17,6 +17,7 @@ from contextiq.evaluation.answer_metrics import ExtractiveAnswerEvaluator
 from contextiq.evaluation.evaluator import RetrievalEvaluator
 from contextiq.generation.extractive_answer import ExtractiveAnswerGenerator
 from contextiq.logging import log_operation
+from contextiq.monitoring.conversations import ConversationSummary
 from contextiq.retrieval.base import Retriever
 from contextiq.safety.abstention import AbstentionPolicy
 from contextiq.schemas.models import Dataset
@@ -73,6 +74,48 @@ class MLflowTracker:
                     "L'expérience existante doit utiliser le dossier d'artefacts local."
                 )
             self.experiment_id = experiment.experiment_id
+
+    def log_conversation_summary(self, summary: ConversationSummary) -> str:
+        """Conserver uniquement les agrégats du journal dans une expérience distincte.
+
+        Le taux de signalement porte sur les échanges revus, sans valeur de test indépendant.
+        Les textes et commentaires humains restent dans la base locale des conversations.
+        """
+        from mlflow.entities import Metric
+
+        name = self.settings.monitoring.experiment_name + "-conversations"
+        location = (self.artifact_dir / "conversations").as_uri()
+        experiment = self.client.get_experiment_by_name(name)
+        if experiment is None:
+            experiment_id = self.client.create_experiment(name, artifact_location=location)
+        elif experiment.lifecycle_stage == "deleted" or experiment.artifact_location != location:
+            raise ValueError("L'expérience conversations doit être active et stockée localement.")
+        else:
+            experiment_id = experiment.experiment_id
+        run = self.client.create_run(
+            experiment_id,
+            tags={
+                "mlflow.runName": "conversation-review",
+                "scope": "all_local_history",
+                "study_status": "human_review_not_independent_validation",
+            },
+        )
+        run_id = run.info.run_id
+        try:
+            timestamp = int(time.time() * 1000)
+            self.client.log_batch(
+                run_id,
+                metrics=[
+                    Metric(f"chat_{key}", float(value), timestamp, 0)
+                    for key, value in summary.model_dump().items()
+                    if value is not None
+                ],
+            )
+            self.client.set_terminated(run_id, status="FINISHED")
+        except Exception:
+            self.client.set_terminated(run_id, status="FAILED")
+            raise
+        return run_id
 
     @log_operation
     def evaluate(

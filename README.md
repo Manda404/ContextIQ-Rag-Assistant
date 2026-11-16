@@ -66,6 +66,26 @@ Par défaut, `local_files_only: true` impose l’utilisation de poids déjà pr�
 
 Les poids sont conservés dans le cache utilisateur Hugging Face, ou dans le dossier indiqué par `cache_dir`. Les vecteurs des documents sont calculés à l’initialisation du retriever et conservés en mémoire.
 
+## Plateforme interactive
+
+Pour utiliser le projet sans écrire de code :
+
+```sh
+make app
+```
+
+Ouvrez **http://127.0.0.1:8501**. L’interface reprend la palette verte et les thèmes clair/sombre du dashboard BRVM, avec cinq espaces :
+
+- **Simulation** : poser une question, choisir la méthode, K et le seuil ; lire l’extrait cité ou le refus et comprendre les étapes du traitement.
+- **Base documentaire** : consulter et filtrer les sources, puis examiner leur couverture dans le jeu d’évaluation.
+- **Évaluations** : comparer Precision@K, Recall@K, Hit Rate@K et MRR@K par méthode dans un tableau et un graphique, puis examiner séparément les réponses et les refus. Les résultats sont enregistrés dans MLflow.
+- **Suivi des conversations** : relire les questions et réponses persistées, inspecter les sources et signaler les échanges hors sujet, incorrects ou incomplets.
+- **Comprendre le projet** : découvrir le pipeline, le prompt, les limites et les rapports sans quitter la plateforme.
+
+La présentation ressemble à un échange, mais chaque question est traitée indépendamment : **aucun LLM ni mémoire conversationnelle n’est utilisé**. Les échanges sont journalisés localement pour analyse ; les textes ne sont pas enregistrés dans MLflow. Les modèles sont chargés à la demande. Les changements de configuration ou de données recréent les ressources et effacent l’historique visible de simulation, en conservant le journal persistant.
+
+L’interface écoute uniquement sur la machine locale. TF-IDF et BM25 permettent de commencer sans télécharger de modèle. Arrêtez le serveur avec Ctrl+C.
+
 ## Utilisation rapide
 
 Depuis la racine du projet ou le dossier `notebooks/`, cet exemple utilise BM25 sans télécharger de modèle :
@@ -158,6 +178,18 @@ MLflow conserve les paramètres, les métriques agrégées, les versions et les 
 
 Le [plan de suivi en production](reports/production_monitoring.md) décrit les indicateurs, les alertes à prévoir, les retours conseillers et les vérifications après modification documentaire. La collecte en continu et les notifications automatiques ne sont pas encore implémentées.
 
+### Journal des questions et réponses
+
+Chaque question envoyée dans la simulation est enregistrée automatiquement dans **`logs/conversations.db`**, une base SQLite locale. Le journal conserve la question, la réponse ou le refus, les sources retrouvées et citées, les scores, les paramètres, la durée, les identifiants d’échange et de session, ainsi que les empreintes du corpus, de la configuration et du prompt. Les erreurs techniques sont enregistrées avec leur type.
+
+La page **Suivi des conversations** permet de consulter les derniers échanges, de les filtrer par méthode et d’enregistrer une revue humaine : utile, hors sujet, incorrecte ou incomplète. Les compteurs couvrent tout le journal ; les taux de signalement portent uniquement sur les échanges revus. Ils ne constituent pas une mesure automatique de pertinence sur tout le trafic.
+
+Le bouton d’enregistrement du bilan crée un run dans l’expérience MLflow locale `contextiq-rag-assistant-conversations`, avec **les agrégats uniquement**. Les textes et commentaires restent dans le journal SQLite. Les rafraîchissements et la consultation des échanges ne créent pas de nouveaux enregistrements.
+
+Cette journalisation est activée par `log_conversations: true` dans `configs/monitoring.yaml`. La passer à `false` arrête les nouveaux enregistrements et masque la page de consultation ; les anciennes données ne sont pas supprimées. Le dossier suit `log_dir` de `configs/logging.yaml`, ou `CONTEXTIQ_LOG_DIR`. `console: false` continue à masquer les traces dans les notebooks et le terminal.
+
+Le fichier Loguru `logs/contextiq-rag-assistant.log` conserve les traces techniques et les identifiants de corrélation, sans recopier les textes des échanges. Les deux fichiers sont exclus de Git. Le journal SQLite contient du texte métier et n’a pas de purge automatique ; sa conservation est distincte de la rotation des logs techniques.
+
 ## Organisation du projet
 
 ```text
@@ -171,6 +203,7 @@ ContextIQ-Rag-Assistant/
 │   ├── evaluation/    # Métriques et évaluateurs
 │   ├── safety/        # Abstention et détection d’injections
 │   ├── monitoring/    # Évaluations et suivi local MLflow
+│   ├── ui/            # Interface Streamlit et service de simulation
 │   ├── schemas/       # Modèles Pydantic
 │   ├── settings.py    # Chargement des configurations
 │   └── logging.py     # Journalisation Loguru
@@ -184,6 +217,7 @@ ContextIQ-Rag-Assistant/
 ## Qualité du code
 
 ```sh
+make app           # Plateforme locale sur le port 8501
 make ci            # Validation Poetry, lint, formatage et tests unitaires
 make test          # Tests seuls, sans téléchargement de modèle
 make lint          # Analyse statique avec Ruff

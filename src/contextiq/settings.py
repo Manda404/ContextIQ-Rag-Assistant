@@ -74,6 +74,7 @@ class MonitoringSettings(ConfigModel):
     experiment_name: str = Field(default="contextiq-rag-assistant", pattern=r"\S")
     storage_dir: str = Field(default="mlflow", pattern=r"\S")
     port: int = Field(default=5000, ge=1024, le=65535)
+    log_conversations: bool = True
 
 
 class Settings(ConfigModel):

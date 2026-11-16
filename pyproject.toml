@@ -6,7 +6,7 @@ authors = [{ name = "Manda Surel", email = "s239150.eps@gmail.com" }]
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.15.2,<3.16"
-dependencies = ["pydantic>=2.12,<3.0", "scikit-learn (>=1.9.1,<2.0.0)", "sentence-transformers (>=6.2.0,<7.0.0)", "numpy (>=2.5.4,<3.0.0)", "pyyaml (>=6.0.3,<7.0.0)", "loguru (>=0.7.3,<0.8.0)", "mlflow (>=3.18.0,<4.0.0)"]
+dependencies = ["pydantic>=2.12,<3.0", "scikit-learn (>=1.9.1,<2.0.0)", "sentence-transformers (>=6.2.0,<7.0.0)", "numpy (>=2.5.4,<3.0.0)", "pyyaml (>=6.0.3,<7.0.0)", "loguru (>=0.7.3,<0.8.0)", "mlflow (>=3.18.0,<4.0.0)", "streamlit (>=1.67.0,<2.0.0)"]
 
 [project.scripts]
 contextiq = "contextiq.cli:main"

@@ -1,4 +1,4 @@
-.PHONY: install check lint format-check format test ci mlflow-ui
+.PHONY: install check lint format-check format test ci mlflow-ui app
 
 PYTHON_SOURCES = src tests notebooks
 
@@ -26,3 +26,6 @@ ci: check test
 
 mlflow-ui:
 	MLFLOW_DISABLE_TELEMETRY=true poetry run python -m contextiq.monitoring.mlflow_tracking
+
+app:
+	MLFLOW_DISABLE_TELEMETRY=true poetry run streamlit run src/contextiq/ui/app.py --server.address 127.0.0.1 --browser.gatherUsageStats false
