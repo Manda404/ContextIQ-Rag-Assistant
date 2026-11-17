@@ -76,7 +76,7 @@ Pour utiliser le projet sans écrire de code :
 make app
 ```
 
-Ouvrez **http://127.0.0.1:8501**. L’interface reprend la palette verte et les thèmes clair/sombre du dashboard BRVM, avec cinq espaces :
+Ouvrez **http://127.0.0.1:8501**. La plateforme propose cinq espaces pour utiliser l’assistant et comprendre ses résultats :
 
 - **Simulation** : poser une question, choisir la méthode, K et le seuil ; lire l’extrait cité ou le refus et comprendre les étapes du traitement.
 - **Base documentaire** : consulter et filtrer les sources, puis examiner leur couverture dans le jeu d’évaluation.
@@ -230,6 +230,12 @@ make format        # Application du formatage
 Le workflow GitHub Actions s’exécute à chaque push, pull request ou lancement manuel. Il sépare deux jobs : qualité/formatage et construction du package sur Ubuntu ; tests et vérification de la commande installée sur macOS avec Python 3.15.2. Poetry est isolé avec pipx et les environnements sont mis en cache à partir du lockfile. Les tests ne nécessitent ni données métier ni téléchargement de modèle. La télémétrie est désactivée et les logs de CI restent dans le dossier temporaire du runner.
 
 Ces tests vérifient le comportement du code ; les notebooks évaluent la qualité des résultats sur les données métier. Aucun déploiement automatique n’est configuré.
+
+## Utiliser l’archive de remise
+
+L’archive conserve le code, les tests, les huit notebooks, les configurations, les rapports et résultats, les données de `data/raw/`, l’énoncé et l’historique Git local. Les environnements Python, caches, anciennes notes de travail, journaux d’exécution et historiques MLflow locaux n’y sont pas inclus.
+
+Sur une autre machine, installez Python 3.15.2 et Poetry 2.1.3, puis suivez les commandes d’installation ci-dessus. Les poids d’embeddings doivent être préchargés comme indiqué dans la section dédiée. Les dossiers de logs et le stockage MLflow sont recréés à l’utilisation.
 
 ## Résultats et limites
 
