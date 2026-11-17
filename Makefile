@@ -1,9 +1,15 @@
-.PHONY: install check lint format-check format test ci mlflow-ui app
+.PHONY: install kernel check lint format-check format test ci mlflow-ui app
 
 PYTHON_SOURCES = src tests notebooks
+PROJECT_PYTHON ?= python3.15
+export POETRY_VIRTUALENVS_IN_PROJECT := true
 
 install:
+	poetry env use "$(PROJECT_PYTHON)"
 	poetry install
+
+kernel:
+	poetry run python -m ipykernel install --user --name contextiq --display-name "ContextIQ"
 
 check:
 	poetry check --strict

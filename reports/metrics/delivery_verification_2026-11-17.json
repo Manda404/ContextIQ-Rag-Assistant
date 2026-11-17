@@ -1,0 +1,127 @@
+{
+  "verified_at": "2026-11-17T05:50:44.883110+01:00",
+  "scope": "functional_delivery_check_not_independent_quality_validation",
+  "runtime": {
+    "python": "3.15.2",
+    "platform": "Darwin",
+    "architecture": "arm64",
+    "poetry": "Poetry (version 2.1.3)",
+    "packages": {
+      "ipykernel": "7.4.0",
+      "streamlit": "1.67.0",
+      "mlflow": "3.18.0",
+      "sentence-transformers": "6.2.0",
+      "torch": "2.15.0"
+    }
+  },
+  "installation": {
+    "command": "make install",
+    "status": "passed",
+    "project_virtualenv": ".venv"
+  },
+  "kernel": {
+    "command": "make kernel",
+    "display_name": "ContextIQ",
+    "status": "passed"
+  },
+  "quality": {
+    "command": "make ci",
+    "status": "passed",
+    "tests": 142
+  },
+  "notebooks": [
+    {
+      "notebook": "01_data_understanding.ipynb",
+      "code_cells": 6,
+      "executed_cells": 6,
+      "status": "passed",
+      "duration_seconds": 10.83
+    },
+    {
+      "notebook": "02_retrieval_experiments.ipynb",
+      "code_cells": 9,
+      "executed_cells": 9,
+      "status": "passed",
+      "duration_seconds": 13.28
+    },
+    {
+      "notebook": "03_retrieval_evaluation.ipynb",
+      "code_cells": 5,
+      "executed_cells": 5,
+      "status": "passed",
+      "duration_seconds": 8.05
+    },
+    {
+      "notebook": "04_abstention_analysis.ipynb",
+      "code_cells": 7,
+      "executed_cells": 7,
+      "status": "passed",
+      "duration_seconds": 8.15
+    },
+    {
+      "notebook": "05_prompt_and_safety.ipynb",
+      "code_cells": 6,
+      "executed_cells": 6,
+      "status": "passed",
+      "duration_seconds": 9.26
+    },
+    {
+      "notebook": "06_extractive_answers.ipynb",
+      "code_cells": 6,
+      "executed_cells": 6,
+      "status": "passed",
+      "duration_seconds": 8.27
+    },
+    {
+      "notebook": "07_answer_evaluation.ipynb",
+      "code_cells": 9,
+      "executed_cells": 9,
+      "status": "passed",
+      "duration_seconds": 13.04
+    },
+    {
+      "notebook": "08_mlflow_monitoring.ipynb",
+      "code_cells": 3,
+      "executed_cells": 3,
+      "status": "passed",
+      "duration_seconds": 10.61
+    }
+  ],
+  "notebook_code_cells": 51,
+  "model": {
+    "first_download": "passed",
+    "local_only_reload": "passed",
+    "expected_top_source": "D2"
+  },
+  "browser": {
+    "application_http": "passed",
+    "mlflow_http": "passed",
+    "question_answer_and_logging": "passed",
+    "human_review": "passed",
+    "conversation_mlflow_summary": "passed",
+    "retrieval_comparison_and_mlflow": "passed",
+    "precision_at_1": {
+      "Embeddings": 0.8,
+      "BM25": 0.4,
+      "TF-IDF": 0.6
+    },
+    "document_navigation": "passed",
+    "guide_navigation": "passed",
+    "theme_switch": "passed"
+  },
+  "sources_unchanged": {
+    "notebooks": true,
+    "data": true,
+    "configs": true
+  },
+  "cleanup": {
+    "status": "passed",
+    "completed_at": "2026-11-17T05:53:16.682648+01:00",
+    "project_virtualenv_removed": true,
+    "temporary_python_and_model_cache_removed": true,
+    "test_kernel": "test_kernel_removed",
+    "test_servers_stopped": true,
+    "generated_logs_and_mlflow_removed": true,
+    "notebooks_data_configs_unchanged": true
+  }
+}
