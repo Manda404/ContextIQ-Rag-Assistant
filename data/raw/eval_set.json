@@ -1,0 +1,8 @@
+[
+  {"q": "Combien de temps de préavis pour un contrat mensuel ?", "gold_docs": ["D1"]},
+  {"q": "Quels frais si je quitte mon abonnement annuel avant la fin ?", "gold_docs": ["D2"]},
+  {"q": "Je déménage, puis-je partir sans payer ?", "gold_docs": ["D3"]},
+  {"q": "Ma ligne est coupée, que faire ?", "gold_docs": ["D4"]},
+  {"q": "Puis-je proposer une remise à un client qui veut partir ?", "gold_docs": ["D5"]},
+  {"q": "Quel est le cours de l'action de l'entreprise ?", "gold_docs": []}
+]

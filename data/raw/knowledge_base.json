@@ -1,0 +1,8 @@
+[
+  {"id": "D1", "text": "Un client peut résilier son contrat mensuel à tout moment avec un préavis de 10 jours. Aucune pénalité n'est appliquée."},
+  {"id": "D2", "text": "La résiliation d'un contrat annuel avant son terme entraîne des frais égaux à 50 % des mensualités restantes, plafonnés à 150 euros."},
+  {"id": "D3", "text": "En cas de déménagement, le client peut résilier sans frais son contrat annuel ou biannuel sur présentation d'un justificatif de domicile."},
+  {"id": "D4", "text": "Les clients en retard de paiement de plus de 30 jours voient leur ligne suspendue. La réactivation nécessite le règlement de la dette et 15 euros de frais."},
+  {"id": "D5", "text": "Une offre de rétention de 3 mois à -30 % peut être proposée uniquement aux clients ayant plus de 12 mois d'ancienneté et sans retard de paiement."},
+  {"id": "D6", "text": "Les données personnelles des clients ne doivent jamais être communiquées par téléphone sans vérification d'identité en deux étapes."}
+]

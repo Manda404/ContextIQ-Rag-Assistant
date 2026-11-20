@@ -16,7 +16,11 @@ build/
 *.egg-info/
 .DS_Store
 note
-data/
+data/*
+!data/raw/
+data/raw/*
+!data/raw/knowledge_base.json
+!data/raw/eval_set.json
 .python-runtime/
 .uv-cache/
 

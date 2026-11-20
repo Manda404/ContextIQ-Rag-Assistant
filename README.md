@@ -102,7 +102,7 @@ make install
 
 Ce raccourci sélectionne Python 3.15, crée ou utilise l’environnement du projet, puis installe les dépendances nécessaires à l’application et aux notebooks.
 
-Les deux fichiers `knowledge_base.json` et `eval_set.json` doivent être présents dans `data/raw/`. Ils sont inclus dans l’archive de remise et exclus du dépôt Git : après un clonage, ajoutez-les localement avant d’utiliser le projet. Aucune clé d’API n’est nécessaire.
+Les deux fichiers `knowledge_base.json` et `eval_set.json` sont fournis dans `data/raw/`, dans le dépôt GitHub comme dans l’archive de remise. Après un clonage ou un téléchargement du projet, les données sont donc déjà disponibles : aucun fichier supplémentaire n’est à ajouter. Aucune clé d’API n’est nécessaire.
 
 ## Utiliser l’application
 
